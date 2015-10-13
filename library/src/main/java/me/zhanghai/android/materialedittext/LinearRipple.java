@@ -6,7 +6,6 @@
 package me.zhanghai.android.materialedittext;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
@@ -45,11 +44,10 @@ public class LinearRipple {
     private float mTargetPosition;
     private float mTargetRadius;
 
-    private float mTweenAll;
-    private float mOpacity;
+    private float mTweenRipple;
+    private float mOpacity = 1;
 
     private Animator mAnimator;
-    private boolean mAnimationEnded;
 
     public LinearRipple(Drawable owner, Rect bounds, float position, float density) {
 
@@ -67,21 +65,22 @@ public class LinearRipple {
     }
 
     public void enter() {
-
-        cancelAnimation();
-
         mAnimator = createEnterAnimation();
         mAnimator.start();
     }
 
+    private int getRippleEnterDuration() {
+        return (int) (1000 * Math.sqrt(mTargetRadius / mWaveTouchDownAcceleration) + 0.5);
+    }
+
     private Animator createEnterAnimation() {
 
-        ObjectAnimator tweenAll = ObjectAnimator.ofFloat(this, TWEEN_ALL, 1);
-        int duration = (int) (1000 * Math.sqrt(mTargetRadius / mWaveTouchDownAcceleration) + 0.5);
-        //tweenAll.setAutoCancel(true);
-        tweenAll.setDuration(duration);
-        tweenAll.setInterpolator(LINEAR_INTERPOLATOR);
-        tweenAll.setStartDelay(RIPPLE_ENTER_DELAY);
+        ObjectAnimator tweenRipple = ObjectAnimator.ofFloat(this, TWEEN_RIPPLE, 1);
+        int duration = getRippleEnterDuration();
+        //tweenRipple.setAutoCancel(true);
+        tweenRipple.setDuration(duration);
+        tweenRipple.setInterpolator(LINEAR_INTERPOLATOR);
+        tweenRipple.setStartDelay(RIPPLE_ENTER_DELAY);
 
         ObjectAnimator opacity = ObjectAnimator.ofFloat(this, OPACITY, 1);
         //opacity.setAutoCancel(true);
@@ -89,7 +88,7 @@ public class LinearRipple {
         opacity.setInterpolator(LINEAR_INTERPOLATOR);
 
         AnimatorSet set = new AnimatorSet();
-        set.play(tweenAll).with(opacity);
+        set.play(tweenRipple).with(opacity);
 
         return set;
     }
@@ -98,57 +97,89 @@ public class LinearRipple {
         mStartingPosition = position;
     }
 
+    public void fill() {
+
+        cancelAnimation();
+
+        if (hasFilled()) {
+            return;
+        }
+
+        mAnimator = createFillAnimation();
+        mAnimator.start();
+    }
+
+    public boolean hasFilled() {
+        return mTweenRipple == 1 && mOpacity == 1;
+    }
+
+    private float getCurrentRadius() {
+        return MathUtils.lerp(0, mTargetRadius, mTweenRipple);
+    }
+
+    private int getRippleFillOrExitDuration() {
+        float radius = getCurrentRadius();
+        float remaining = mTargetRadius - radius;
+        return (int) (1000 * Math.sqrt(remaining /
+                (mWaveTouchUpAcceleration + mWaveTouchDownAcceleration)) + 0.5);
+    }
+
+    private Animator createFillAnimation() {
+        ObjectAnimator tweenRipple = ObjectAnimator.ofFloat(this, TWEEN_RIPPLE, 1);
+        //tweenRipple.setAutoCancel(true);
+        tweenRipple.setDuration(getRippleFillOrExitDuration());
+        tweenRipple.setInterpolator(DECELERATE_INTERPOLATOR);
+        return tweenRipple;
+    }
+
+    public void makeFilled() {
+
+        mTweenRipple = 1;
+        mOpacity = 1;
+
+        invalidateSelf();
+    }
+
     public void exit() {
 
         cancelAnimation();
 
-        mAnimator = createEndAnimation(true);
+        if (hasExited()) {
+            return;
+        }
+
+        mAnimator = createExitAnimation();
         mAnimator.start();
     }
 
-    public void finish() {
-
-        cancelAnimation();
-
-        mAnimator = createEndAnimation(false);
-        mAnimator.start();
-    }
-
-    private int getRadiusExitDuration() {
-        final float radius = MathUtils.lerp(0, mTargetRadius, mTweenAll);
-        final float remaining = mTargetRadius - radius;
-        return (int) (1000 * Math.sqrt(remaining /
-                (mWaveTouchUpAcceleration + mWaveTouchDownAcceleration)) + 0.5);
+    public boolean hasExited() {
+        return mOpacity == 0;
     }
 
     private int getOpacityExitDuration() {
         return (int) (1000 * mOpacity / WAVE_OPACITY_DECAY_VELOCITY + 0.5f);
     }
 
-    private Animator createEndAnimation(boolean exit) {
+    private Animator createExitAnimation() {
 
-        ObjectAnimator tweenAll = ObjectAnimator.ofFloat(this, TWEEN_ALL, 1);
-        //tweenAll.setAutoCancel(true);
-        tweenAll.setDuration(getRadiusExitDuration());
-        tweenAll.setInterpolator(DECELERATE_INTERPOLATOR);
+        ObjectAnimator opacity = ObjectAnimator.ofFloat(this, OPACITY, 0);
+        //opacity.setAutoCancel(true);
+        opacity.setDuration(getOpacityExitDuration());
+        opacity.setInterpolator(LINEAR_INTERPOLATOR);
 
-        Animator animator;
-        if (exit) {
+        if (hasFilled()) {
+            return opacity;
+        } else {
 
-            ObjectAnimator opacity = ObjectAnimator.ofFloat(this, OPACITY, 0);
-            //opacity.setAutoCancel(true);
-            opacity.setDuration(getOpacityExitDuration());
-            opacity.setInterpolator(LINEAR_INTERPOLATOR);
+            ObjectAnimator tweenRipple = ObjectAnimator.ofFloat(this, TWEEN_RIPPLE, 1);
+            //tweenRipple.setAutoCancel(true);
+            tweenRipple.setDuration(getRippleFillOrExitDuration());
+            tweenRipple.setInterpolator(DECELERATE_INTERPOLATOR);
 
             AnimatorSet set = new AnimatorSet();
-            set.play(tweenAll).with(opacity);
-            animator = set;
-        } else {
-            animator = tweenAll;
+            set.play(tweenRipple).with(opacity);
+            return set;
         }
-        animator.addListener(mAnimationListener);
-
-        return animator;
     }
 
     public void cancelAnimation() {
@@ -160,30 +191,28 @@ public class LinearRipple {
     }
 
     private void stopAnimation(boolean cancel) {
-        if (mAnimator != null) {
-            if (cancel) {
-                mAnimator.cancel();
-            } else {
-                mAnimator.end();
-            }
-            mAnimator = null;
+        if (mAnimator == null) {
+            return;
         }
-    }
 
-    public boolean isAnimationEnded() {
-        return mAnimationEnded;
+        if (cancel) {
+            mAnimator.cancel();
+        } else {
+            mAnimator.end();
+        }
+        mAnimator = null;
     }
 
     public void draw(Canvas canvas, Paint paint) {
 
         int origAlpha = paint.getAlpha();
         int alpha = (int) (origAlpha * mOpacity + 0.5f);
-        float radius = MathUtils.lerp(0, mTargetRadius, mTweenAll);
-        if (alpha == 0 || radius == 0) {
+        float radius = getCurrentRadius();
+        if (alpha <= 0 || radius <= 0) {
             return;
         }
 
-        float position = MathUtils.lerp(mStartingPosition, mTargetPosition, mTweenAll);
+        float position = MathUtils.lerp(mStartingPosition, mTargetPosition, mTweenRipple);
         float left = MathUtils.constrain(position - radius, mBounds.left, mBounds.right);
         float right = MathUtils.constrain(position + radius, mBounds.left, mBounds.right);
         paint.setAlpha(alpha);
@@ -194,13 +223,6 @@ public class LinearRipple {
     private void invalidateSelf() {
         mOwner.invalidateSelf();
     }
-
-    private final Animator.AnimatorListener mAnimationListener = new AnimatorListenerAdapter() {
-        @Override
-        public void onAnimationEnd(Animator animator) {
-            mAnimationEnded = true;
-        }
-    };
 
     /**
      * From {@code android.graphics.drawable.RippleForeground.LogDecelerateInterpolator}.
@@ -234,17 +256,17 @@ public class LinearRipple {
     /**
      * Property for animating position and radius between its initial and target values.
      */
-    private static final FloatProperty<LinearRipple> TWEEN_ALL =
-            new FloatProperty<LinearRipple>("tweenAll") {
+    private static final FloatProperty<LinearRipple> TWEEN_RIPPLE =
+            new FloatProperty<LinearRipple>("tweenRipple") {
 
                 @Override
                 public Float get(LinearRipple object) {
-                    return object.mTweenAll;
+                    return object.mTweenRipple;
                 }
 
                 @Override
                 public void setValue(LinearRipple object, float value) {
-                    object.mTweenAll = value;
+                    object.mTweenRipple = value;
                     object.invalidateSelf();
                 }
             };
