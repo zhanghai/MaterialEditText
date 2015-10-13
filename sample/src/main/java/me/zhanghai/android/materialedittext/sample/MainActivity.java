@@ -15,10 +15,12 @@ import me.zhanghai.android.materialedittext.EditTextBackgroundDrawable;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.edit1)
-    EditText edit1;
-    @Bind(R.id.edit2)
-    EditText edit2;
+    @Bind(R.id.normal_edit)
+    EditText normalEdit;
+    @Bind(R.id.error_edit)
+    EditText errorEdit;
+    @Bind(R.id.disabled_edit)
+    EditText disabldEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
 
-        edit1.setBackground(new EditTextBackgroundDrawable(this));
-        edit2.setBackground(new EditTextBackgroundDrawable(this));
+        normalEdit.setBackground(new EditTextBackgroundDrawable(this));
+        //errorEdit.setBackground(new EditTextBackgroundDrawable(this));
+        errorEdit.setError("Error");
+        disabldEdit.setBackground(new EditTextBackgroundDrawable(this));
     }
 }

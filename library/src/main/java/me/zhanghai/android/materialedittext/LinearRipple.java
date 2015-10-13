@@ -61,7 +61,8 @@ public class LinearRipple {
 
     public void onBoundsChange(Rect bounds) {
         mBounds = bounds;
-        mTargetPosition = mTargetRadius = mBounds.width() / 2f;
+        mTargetRadius = mBounds.width() / 2f;
+        mTargetPosition = mBounds.left + mTargetRadius;
     }
 
     public void enter() {
@@ -120,7 +121,7 @@ public class LinearRipple {
     private int getRippleFillOrExitDuration() {
         float radius = getCurrentRadius();
         float remaining = mTargetRadius - radius;
-        return (int) (1000 * Math.sqrt(remaining /
+        return (int) (1000 * Math.sqrt(2 * remaining /
                 (mWaveTouchUpAcceleration + mWaveTouchDownAcceleration)) + 0.5);
     }
 

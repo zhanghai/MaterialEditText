@@ -18,14 +18,24 @@
     tools:context="me.zhanghai.android.materialedittext.sample.MainActivity">
 
     <EditText
-        android:id="@+id/edit1"
+        android:id="@+id/normal_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="EditText 1" />
+        android:hint="Normal"
+        android:maxLines="1" />
 
     <EditText
-        android:id="@+id/edit2"
+        android:id="@+id/error_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="EditText 2" />
+        android:hint="Error"
+        android:maxLines="1" />
+
+    <EditText
+        android:id="@+id/disabled_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:hint="Disabled"
+        android:maxLines="1" />
 </LinearLayout>

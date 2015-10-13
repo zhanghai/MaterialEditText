@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.materialedittext;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -23,8 +24,11 @@ public class EditTextBackgroundDrawable extends DrawableBase {
 
     private static final String TAG = EditTextBackgroundDrawable.class.getName();
 
-    private static final int INTRINSIC_PADDING_BOTTOM_DP = 4;
+    private static final int INTRINSIC_WIDTH_DP = 12;
+    private static final int INTRINSIC_HEIGHT_DP = 7;
+    private static final int INTRINSIC_PADDING_BOTTOM = 13;
 
+    private static final int DRAWING_RECT_TOP_FROM_BOTTOM_DP = 6;
     private static final int DEFAULT_HEIGHT_DP = 1;
     private static final int ACTIVATED_HEIGHT_DP = 2;
 
@@ -32,6 +36,10 @@ public class EditTextBackgroundDrawable extends DrawableBase {
     private static final int MAX_RIPPLES = 10;
 
     private final Rect mPadding;
+
+    private final int mIntrinsicWidth;
+    private final int mIntrinsicHeight;
+    private final int mDrawingRectTopFromBottom;
 
     private final int mDefaultHeight;
     private final int mActivatedHeight;
@@ -67,22 +75,35 @@ public class EditTextBackgroundDrawable extends DrawableBase {
         Resources resources = context.getResources();
         mDensity = resources.getDisplayMetrics().density;
 
+        @SuppressLint("PrivateResource")
         int paddingHorizontal = resources.getDimensionPixelOffset(
                 R.dimen.abc_edit_text_inset_horizontal_material);
+        @SuppressLint("PrivateResource")
         int paddingTop = resources.getDimensionPixelOffset(
                 R.dimen.abc_edit_text_inset_top_material);
-        float paddingBottomF = resources.getDimension(R.dimen.abc_edit_text_inset_bottom_material);
-        paddingBottomF += INTRINSIC_PADDING_BOTTOM_DP * mDensity;
         // As in android.util.TypedValue.complexToDimensionPixelOffset().
-        int paddingBottom = (int) paddingBottomF;
+        int paddingBottom = (int) (INTRINSIC_PADDING_BOTTOM * mDensity + 0.5f);
         mPadding = new Rect(paddingHorizontal, paddingTop, paddingHorizontal, paddingBottom);
 
+        mIntrinsicWidth = (int) (INTRINSIC_WIDTH_DP * mDensity + 0.5f);
+        mIntrinsicHeight = (int) (INTRINSIC_HEIGHT_DP * mDensity + 0.5f);
+        mDrawingRectTopFromBottom = (int) (DRAWING_RECT_TOP_FROM_BOTTOM_DP * mDensity + 0.5f);
         mDefaultHeight = (int) (DEFAULT_HEIGHT_DP * mDensity + 0.5f);
         mActivatedHeight = (int) (ACTIVATED_HEIGHT_DP * mDensity + 0.5f);
 
         mColorHint = ThemeUtils.getColorFromAttrRes(android.R.attr.textColorHint, context);
         mColorHintAlpha = (float) Color.alpha(mColorHint) / 0xFF;
         mDisabledAlpha = ThemeUtils.getFloatFromAttrRes(android.R.attr.disabledAlpha, context);
+    }
+
+    @Override
+    public int getIntrinsicWidth() {
+        return mIntrinsicWidth + mPadding.left + mPadding.right;
+    }
+
+    @Override
+    public int getIntrinsicHeight() {
+        return mIntrinsicHeight + mPadding.top + mPadding.bottom;
     }
 
     @Override
@@ -98,11 +119,12 @@ public class EditTextBackgroundDrawable extends DrawableBase {
     protected void onBoundsChange(Rect bounds) {
 
         int drawingRectLeft = bounds.left + mPadding.left;
-        int drawingRectTop = bounds.bottom - mActivatedHeight;
+        int drawingRectTop = bounds.bottom - mDrawingRectTopFromBottom;
         int drawingRectRight = bounds.right - mPadding.right;
         mDefaultRect.set(drawingRectLeft, drawingRectTop, drawingRectRight,
                 drawingRectTop + mDefaultHeight);
-        mActivatedRect.set(drawingRectLeft, drawingRectTop, drawingRectRight, bounds.bottom);
+        mActivatedRect.set(drawingRectLeft, drawingRectTop, drawingRectRight,
+                drawingRectTop + mActivatedHeight);
 
         if (mEnteringRipple != null) {
             mEnteringRipple.onBoundsChange(mActivatedRect);

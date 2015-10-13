@@ -26,6 +26,7 @@ import me.zhanghai.android.materialedittext.internal.ThemeUtils;
 
 abstract class DrawableBase extends Drawable {
 
+    protected boolean mAutoMirrored;
     protected int mAlpha = 0xFF;
     protected ColorFilter mColorFilter;
     protected ColorStateList mTintList;
@@ -40,6 +41,25 @@ abstract class DrawableBase extends Drawable {
         // setTint() has been overridden for compatibility; DrawableCompat won't work because
         // wrapped Drawable won't be Animatable.
         setTint(colorControlActivated);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isAutoMirrored() {
+        return mAutoMirrored;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAutoMirrored(boolean mirrored) {
+        if (mAutoMirrored != mirrored) {
+            mAutoMirrored = mirrored;
+            invalidateSelf();
+        }
     }
 
     /**
@@ -153,7 +173,7 @@ abstract class DrawableBase extends Drawable {
     }
 
     private boolean needMirroring() {
-        return DrawableCompat.isAutoMirrored(this)
+        return mAutoMirrored
                 && DrawableCompat.getLayoutDirection(this) == ViewCompat.LAYOUT_DIRECTION_RTL;
     }
 
