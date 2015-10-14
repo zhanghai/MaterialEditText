@@ -6,5 +6,20 @@
   -->
 
 <resources>
-    <string name="app_name">MaterialEditText</string>
+
+    <string name="app_name">MaterialEditText Sample</string>
+
+    <string name="native_edit_text">Native EditText</string>
+    <string name="material_edit_text">MaterialEditText</string>
+    <string name="material_text_input_layout">MaterialTextInputLayout</string>
+    <string name="normal">Normal</string>
+    <string name="error">Error</string>
+    <string name="disabled">Disabled</string>
+    <string name="action_about">About</string>
+
+    <string name="about_title">About</string>
+    <string name="about_name">MaterialEditText</string>
+    <string name="about_version_format">Version %1$s</string>
+    <string name="about_credit">Zhang Hai 2015</string>
+    <string name="about_github"><a href="https://github.com/DreaminginCodeZH/MaterialEditText">View on GitHub</a></string>
 </resources>

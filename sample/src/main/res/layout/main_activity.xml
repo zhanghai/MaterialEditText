@@ -5,52 +5,130 @@
   ~ All Rights Reserved.
   -->
 
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/screen_edge_horizontal_margin"
-    android:paddingRight="@dimen/screen_edge_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context="me.zhanghai.android.materialedittext.sample.MainActivity">
 
-    <me.zhanghai.android.materialedittext.MaterialTextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="true">
+        android:paddingLeft="@dimen/screen_edge_horizontal_margin"
+        android:paddingRight="@dimen/screen_edge_horizontal_margin"
+        android:paddingTop="@dimen/screen_edge_vertical_margin"
+        android:paddingBottom="@dimen/screen_edge_vertical_margin"
+        android:orientation="vertical">
+
+        <!-- EditText -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/native_edit_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Normal"
-            android:maxLines="1" />
-    </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
+            android:layout_marginLeft="@dimen/edit_text_horizontal_margin"
+            android:layout_marginRight="@dimen/edit_text_horizontal_margin"
+            android:hint="@string/normal" />
 
+        <EditText
+            android:id="@+id/error_native_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edit_text_horizontal_margin"
+            android:layout_marginRight="@dimen/edit_text_horizontal_margin"
+            android:hint="@string/error" />
 
-    <me.zhanghai.android.materialedittext.MaterialTextInputLayout
-        android:id="@+id/error_edit_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Error"
-            android:maxLines="1" />
-    </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
-
-    <me.zhanghai.android.materialedittext.MaterialTextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:errorEnabled="true">
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edit_text_horizontal_margin"
+            android:layout_marginRight="@dimen/edit_text_horizontal_margin"
             android:enabled="false"
-            android:hint="Disabled"
-            android:maxLines="1" />
-    </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
-</LinearLayout>
+            android:hint="@string/disabled" />
+
+        <!-- MaterialEditText -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/material_edit_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+        <me.zhanghai.android.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edit_text_horizontal_margin"
+            android:layout_marginRight="@dimen/edit_text_horizontal_margin"
+            android:hint="@string/normal" />
+
+        <me.zhanghai.android.materialedittext.MaterialEditText
+            android:id="@+id/error_material_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edit_text_horizontal_margin"
+            android:layout_marginRight="@dimen/edit_text_horizontal_margin"
+            android:hint="@string/error" />
+
+        <me.zhanghai.android.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edit_text_horizontal_margin"
+            android:layout_marginRight="@dimen/edit_text_horizontal_margin"
+            android:enabled="false"
+            android:hint="@string/disabled" />
+
+        <!-- MaterialTextInputLayout -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/material_text_input_layout"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+        <me.zhanghai.android.materialedittext.MaterialTextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edit_text_horizontal_margin"
+            android:layout_marginRight="@dimen/edit_text_horizontal_margin">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/normal" />
+        </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
+
+
+        <me.zhanghai.android.materialedittext.MaterialTextInputLayout
+            android:id="@+id/error_edit_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edit_text_horizontal_margin"
+            android:layout_marginRight="@dimen/edit_text_horizontal_margin"
+            app:errorEnabled="true">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/error" />
+        </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
+
+        <me.zhanghai.android.materialedittext.MaterialTextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edit_text_horizontal_margin"
+            android:layout_marginRight="@dimen/edit_text_horizontal_margin">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="@string/disabled" />
+        </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
+    </LinearLayout>
+</ScrollView>
