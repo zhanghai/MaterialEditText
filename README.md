@@ -1,6 +1,6 @@
 # MaterialProgressBar
 
-Material Design `EditText` with a delightful linear ripple in background.
+Material Design `EditText` with a delightful linear ripple in background, compatible with Android 4.0+.
 
 ## Preview
 
