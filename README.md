@@ -4,7 +4,7 @@ Material Design `EditText` with a delightful linear ripple in the background.
 
 ## Screenshot
 
-Native `EditText`:
+Native `EditText` (on Samsung S4 with Android 5.0.1):
 
 ![NativeEditText](screenshot/native-edittext.gif)
 
@@ -32,7 +32,7 @@ compile 'me.zhanghai.android.materialedittext:library:1.0.0'
 
 ## Usage
 
-Simply replace your `EditText` with `MaterialEditText`, and `TextInputLayout` with `MaterialTextInputLayout`, then you can enjoy the delightful detail now.
+Simply replace your `EditText` with `MaterialEditText` and `TextInputLayout` with `MaterialTextInputLayout`, then you can enjoy the delightful detail now.
 
 ## ProGuard
 
