@@ -105,7 +105,6 @@
                 android:hint="@string/normal" />
         </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
 
-
         <me.zhanghai.android.materialedittext.MaterialTextInputLayout
             android:id="@+id/error_edit_layout"
             android:layout_width="match_parent"
