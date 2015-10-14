@@ -36,6 +36,19 @@ compile 'me.zhanghai.android.materialedittext:library:1.0.0'
 
 Simply replace your `EditText` with `MaterialEditText` and `TextInputLayout` with `MaterialTextInputLayout`, then you can enjoy the delightful detail now.
 
+For example:
+
+```xml
+<me.zhanghai.android.materialedittext.MaterialTextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+   <me.zhanghai.android.materialedittext.MaterialEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</me.zhanghai.android.materialedittext.MaterialTextInputLayout>
+```xml
+
 ## ProGuard
 
 The AAR of this library has already included a Proguard configuration file to make `ObjectAnimator` work properly.
