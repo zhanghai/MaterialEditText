@@ -5,7 +5,6 @@
 
 package me.zhanghai.android.materialedittext;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -24,8 +23,11 @@ public class EditTextBackgroundDrawable extends DrawableBase {
 
     private static final String TAG = EditTextBackgroundDrawable.class.getName();
 
-    private static final int INTRINSIC_WIDTH_DP = 12;
-    private static final int INTRINSIC_HEIGHT_DP = 7;
+    private static final int INTRINSIC_WIDTH_DP = 20;
+    private static final int INTRINSIC_HEIGHT_DP = 24;
+
+    private static final int INTRINSIC_PADDING_HORIZONTAL = 4;
+    private static final int INTRINSIC_PADDING_TOP = 4;
     private static final int INTRINSIC_PADDING_BOTTOM = 13;
 
     private static final int DRAWING_RECT_TOP_FROM_BOTTOM_DP = 6;
@@ -75,18 +77,15 @@ public class EditTextBackgroundDrawable extends DrawableBase {
         Resources resources = context.getResources();
         mDensity = resources.getDisplayMetrics().density;
 
-        @SuppressLint("PrivateResource")
-        int paddingHorizontal = resources.getDimensionPixelOffset(
-                R.dimen.abc_edit_text_inset_horizontal_material);
-        @SuppressLint("PrivateResource")
-        int paddingTop = resources.getDimensionPixelOffset(
-                R.dimen.abc_edit_text_inset_top_material);
-        // As in android.util.TypedValue.complexToDimensionPixelOffset().
-        int paddingBottom = (int) (INTRINSIC_PADDING_BOTTOM * mDensity + 0.5f);
-        mPadding = new Rect(paddingHorizontal, paddingTop, paddingHorizontal, paddingBottom);
-
         mIntrinsicWidth = (int) (INTRINSIC_WIDTH_DP * mDensity + 0.5f);
         mIntrinsicHeight = (int) (INTRINSIC_HEIGHT_DP * mDensity + 0.5f);
+
+        // As in android.util.TypedValue.complexToDimensionPixelOffset().
+        int paddingHorizontal = (int) (INTRINSIC_PADDING_HORIZONTAL * mDensity);
+        int paddingTop = (int) (INTRINSIC_PADDING_TOP * mDensity);
+        int paddingBottom = (int) (INTRINSIC_PADDING_BOTTOM * mDensity);
+        mPadding = new Rect(paddingHorizontal, paddingTop, paddingHorizontal, paddingBottom);
+
         mDrawingRectTopFromBottom = (int) (DRAWING_RECT_TOP_FROM_BOTTOM_DP * mDensity + 0.5f);
         mDefaultHeight = (int) (DEFAULT_HEIGHT_DP * mDensity + 0.5f);
         mActivatedHeight = (int) (ACTIVATED_HEIGHT_DP * mDensity + 0.5f);
@@ -98,12 +97,12 @@ public class EditTextBackgroundDrawable extends DrawableBase {
 
     @Override
     public int getIntrinsicWidth() {
-        return mIntrinsicWidth + mPadding.left + mPadding.right;
+        return mIntrinsicWidth;
     }
 
     @Override
     public int getIntrinsicHeight() {
-        return mIntrinsicHeight + mPadding.top + mPadding.bottom;
+        return mIntrinsicHeight;
     }
 
     @Override
