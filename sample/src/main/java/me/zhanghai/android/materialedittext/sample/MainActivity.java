@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.materialedittext.sample;
 
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -16,11 +17,13 @@ import me.zhanghai.android.materialedittext.EditTextBackgroundDrawable;
 public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.normal_edit)
-    EditText normalEdit;
+    EditText mNormalEdit;
+    @Bind(R.id.error_edit_layout)
+    TextInputLayout mErrorEditLayout;
     @Bind(R.id.error_edit)
-    EditText errorEdit;
+    EditText mErrorEdit;
     @Bind(R.id.disabled_edit)
-    EditText disabldEdit;
+    EditText mDisabledEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
 
-        normalEdit.setBackground(new EditTextBackgroundDrawable(this));
-        //errorEdit.setBackground(new EditTextBackgroundDrawable(this));
-        errorEdit.setError("Error");
-        disabldEdit.setBackground(new EditTextBackgroundDrawable(this));
+        mNormalEdit.setBackground(new EditTextBackgroundDrawable(this));
+        mErrorEdit.setBackground(new EditTextBackgroundDrawable(this));
+        mErrorEditLayout.setError("An error occurred");
+        mDisabledEdit.setBackground(new EditTextBackgroundDrawable(this));
     }
 }

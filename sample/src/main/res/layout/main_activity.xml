@@ -7,6 +7,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,25 +18,42 @@
     android:orientation="vertical"
     tools:context="me.zhanghai.android.materialedittext.sample.MainActivity">
 
-    <EditText
-        android:id="@+id/normal_edit"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Normal"
-        android:maxLines="1" />
+        app:errorEnabled="true">
+        <EditText
+            android:id="@+id/normal_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Normal"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/error_edit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Error"
-        android:maxLines="1" />
 
-    <EditText
-        android:id="@+id/disabled_edit"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/error_edit_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
-        android:hint="Disabled"
-        android:maxLines="1" />
+        app:errorEnabled="true">
+        <EditText
+            android:id="@+id/error_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Error"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true">
+        <EditText
+            android:id="@+id/disabled_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="Disabled"
+            android:maxLines="1" />
+    </android.support.design.widget.TextInputLayout>
 </LinearLayout>
