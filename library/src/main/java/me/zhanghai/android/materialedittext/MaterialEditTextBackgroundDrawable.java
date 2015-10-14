@@ -19,9 +19,9 @@ import android.util.Log;
 
 import me.zhanghai.android.materialedittext.internal.ThemeUtils;
 
-public class EditTextBackgroundDrawable extends DrawableBase {
+public class MaterialEditTextBackgroundDrawable extends DrawableBase {
 
-    private static final String TAG = EditTextBackgroundDrawable.class.getName();
+    private static final String TAG = MaterialEditTextBackgroundDrawable.class.getName();
 
     private static final int INTRINSIC_WIDTH_DP = 20;
     private static final int INTRINSIC_HEIGHT_DP = 24;
@@ -60,6 +60,7 @@ public class EditTextBackgroundDrawable extends DrawableBase {
     private boolean mEnabled;
     private boolean mPressed;
     private boolean mFocused;
+    private boolean mError;
 
     private boolean mHasPendingRipple = false;
     private float mPendingRipplePosition;
@@ -71,7 +72,7 @@ public class EditTextBackgroundDrawable extends DrawableBase {
     private LinearRipple[] mExitingRipples = new LinearRipple[MAX_RIPPLES];
     private int mExitingRippleCount;
 
-    public EditTextBackgroundDrawable(Context context) {
+    public MaterialEditTextBackgroundDrawable(Context context) {
         super(context);
 
         Resources resources = context.getResources();
@@ -166,6 +167,17 @@ public class EditTextBackgroundDrawable extends DrawableBase {
         }
     }
 
+    public boolean hasError() {
+        return mError;
+    }
+
+    public void setError(boolean error) {
+        if (mError != error) {
+            mError = error;
+            onStateChanged();
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -205,13 +217,10 @@ public class EditTextBackgroundDrawable extends DrawableBase {
 
     private void onStateChanged() {
 
-        Log.wtf(TAG, "onStateChanged: mEnabled=" + mEnabled + ", mPressed=" + mPressed
-                + ", mFocused=" + mFocused);
-
         updateRipples();
 
         // Branch into states and operate on each non-exiting group of ripple.
-        if (!mEnabled || (!mPressed && !mFocused)) {
+        if (!mEnabled || (!mPressed && !mFocused && !mError)) {
             // Disabled, or enabled and unpressed and unfocused.
             // Exit non-exiting ripples.
             exitRipples();
@@ -223,7 +232,7 @@ public class EditTextBackgroundDrawable extends DrawableBase {
                 createAndEnterRipple();
             }
         } else {
-            // Enabled, unpressed, focused.
+            // Enabled, unpressed, focused || error.
             // Fill the entering ripple if exists.
             if (mEnteringRipple != null) {
                 fillEnteringRipple();
@@ -233,6 +242,8 @@ public class EditTextBackgroundDrawable extends DrawableBase {
                 createFillingRipple();
             }
         }
+
+        invalidateSelf();
     }
 
     private void removeEnteringRipple() {
@@ -384,9 +395,6 @@ public class EditTextBackgroundDrawable extends DrawableBase {
     @Override
     public void jumpToCurrentState() {
 
-        Log.wtf(TAG, "jumpToCurrentState: mEnabled=" + mEnabled + ", mPressed=" + mPressed
-                + ", mFocused=" + mFocused);
-
         updateRipples();
 
         removeEnteringRipple();
@@ -399,7 +407,9 @@ public class EditTextBackgroundDrawable extends DrawableBase {
             }
         } else {
             removeFilledRipple();
-         }
+        }
+
+        invalidateSelf();
     }
 
     private void createFilledRipple() {
@@ -415,9 +425,6 @@ public class EditTextBackgroundDrawable extends DrawableBase {
      */
     @Override
     public boolean setVisible(boolean visible, boolean restart) {
-
-        Log.wtf(TAG, "setVisible: mEnabled=" + mEnabled + ", mPressed=" + mPressed
-                + ", mFocused=" + mFocused);
 
         updateRipples();
 

@@ -18,42 +18,39 @@
     android:orientation="vertical"
     tools:context="me.zhanghai.android.materialedittext.sample.MainActivity">
 
-    <android.support.design.widget.TextInputLayout
+    <me.zhanghai.android.materialedittext.MaterialTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
         <EditText
-            android:id="@+id/normal_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Normal"
             android:maxLines="1" />
-    </android.support.design.widget.TextInputLayout>
+    </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
 
 
-    <android.support.design.widget.TextInputLayout
+    <me.zhanghai.android.materialedittext.MaterialTextInputLayout
         android:id="@+id/error_edit_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
         <EditText
-            android:id="@+id/error_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Error"
             android:maxLines="1" />
-    </android.support.design.widget.TextInputLayout>
+    </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <me.zhanghai.android.materialedittext.MaterialTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
         <EditText
-            android:id="@+id/disabled_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
             android:hint="Disabled"
             android:maxLines="1" />
-    </android.support.design.widget.TextInputLayout>
+    </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
 </LinearLayout>
