@@ -22,7 +22,7 @@ This library took the framework implementation of `RippleDrawable` as reference 
 
 For simplicity of usage, a `MaterialEditText` is created to set the background automatically, and set the hotspot of ripple on platforms prior to Lollipop.
 
-The `InputTextLayout` from Design Support Library can automatically set the red tint on background when an error is set. An `MaterialInputTextLayout` is introduced to make the background drawable consistent with Material Design Guideline when an error is set.
+The `InputTextLayout` from Design Support Library can automatically set the red tint on background when an error is set. An `MaterialInputTextLayout` is introduced to make the background drawable show a bold red line consistent with Material Design Guideline when an error is set.
 
 ## Integration
 
