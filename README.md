@@ -12,6 +12,8 @@ Native `EditText` (on Samsung S4 with Android 5.0.1):
 
 ![MaterialEditText](screenshot/materialedittext.gif)
 
+Sample screenshot:
+
 ![Screenshot](screenshot/screenshot.png)
 
 [Sample APK](//github.com/DreaminginCodeZH/MaterialEditText/releases/download/v1.0.0/sample-release.apk)
