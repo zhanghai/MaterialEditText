@@ -2,7 +2,7 @@
 
 Material Design `EditText` with a delightful linear ripple in the background.
 
-## Screenshot
+## Preview
 
 Native `EditText` (on Samsung S4 with Android 5.0.1):
 
@@ -13,6 +13,8 @@ Native `EditText` (on Samsung S4 with Android 5.0.1):
 ![MaterialEditText](screenshot/materialedittext.gif)
 
 ![Screenshot](screenshot/screenshot.png)
+
+[Sample APK](//github.com/DreaminginCodeZH/MaterialEditText/releases/download/v1.0.0/sample-release.apk)
 
 ## Design
 
