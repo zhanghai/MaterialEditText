@@ -11,11 +11,11 @@ import android.view.View;
 
 public class ViewCompat {
 
+    @SuppressWarnings("deprecation")
     public static void setBackground(View view, Drawable background) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackground(background);
         } else {
-            //noinspection deprecation
             view.setBackgroundDrawable(background);
         }
     }

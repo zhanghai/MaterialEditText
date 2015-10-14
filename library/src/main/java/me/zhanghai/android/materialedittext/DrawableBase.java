@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.materialedittext;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
@@ -24,6 +25,9 @@ import android.support.v4.view.ViewCompat;
 
 import me.zhanghai.android.materialedittext.internal.ThemeUtils;
 
+/**
+ * A simple base class containing some common implementation for {@link Drawable}.
+ */
 abstract class DrawableBase extends Drawable {
 
     protected boolean mAutoMirrored;
@@ -35,6 +39,7 @@ abstract class DrawableBase extends Drawable {
 
     private Paint mPaint;
 
+    @SuppressLint("PrivateResource")
     public DrawableBase(Context context) {
         int colorControlActivated = ThemeUtils.getColorFromAttrRes(R.attr.colorControlActivated,
                 context);

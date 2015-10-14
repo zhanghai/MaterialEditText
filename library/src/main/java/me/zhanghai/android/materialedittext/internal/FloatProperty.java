@@ -24,6 +24,9 @@ public abstract class FloatProperty<T> extends Property<T, Float> {
         super(Float.class, name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public final void set(T object, Float value) {
         setValue(object, value);
@@ -32,6 +35,9 @@ public abstract class FloatProperty<T> extends Property<T, Float> {
     /**
      * A type-specific override of the {@link #set(Object, Float)} that is faster when dealing
      * with fields of type <code>float</code>.
+     *
+     * @param object The target object.
+     * @param value The <code>float</code> type value.
      */
     public abstract void setValue(T object, float value);
 }

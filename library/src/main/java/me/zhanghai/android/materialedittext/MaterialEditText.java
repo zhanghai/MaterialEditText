@@ -5,7 +5,9 @@
 
 package me.zhanghai.android.materialedittext;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.AttributeSet;
@@ -13,6 +15,11 @@ import android.view.MotionEvent;
 
 import me.zhanghai.android.materialedittext.internal.ViewCompat;
 
+/**
+ * An {@code AppCompatEditText} that automatically sets its background to
+ * {@link MaterialEditTextBackgroundDrawable} and calls {@link Drawable#setHotspot} for it on
+ * platforms prior to {@link Build.VERSION_CODES#LOLLIPOP}.
+ */
 public class MaterialEditText extends AppCompatEditText {
 
     private MaterialEditTextBackgroundDrawable mBackground;
@@ -41,6 +48,7 @@ public class MaterialEditText extends AppCompatEditText {
     }
 
     @Override
+    @SuppressLint("NewApi")
     public boolean onTouchEvent(MotionEvent event) {
         boolean consumed = super.onTouchEvent(event);
 

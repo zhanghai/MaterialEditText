@@ -13,12 +13,17 @@ import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.EditText;
 
 import me.zhanghai.android.materialedittext.internal.ThemeUtils;
 
+/**
+ * A Material Design background {@link Drawable} for {@link EditText}.
+ */
 public class MaterialEditTextBackgroundDrawable extends DrawableBase {
 
     private static final String TAG = MaterialEditTextBackgroundDrawable.class.getName();
@@ -96,16 +101,25 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
         mDisabledAlpha = ThemeUtils.getFloatFromAttrRes(android.R.attr.disabledAlpha, context);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getIntrinsicWidth() {
         return mIntrinsicWidth;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getIntrinsicHeight() {
         return mIntrinsicHeight;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean getPadding(@NonNull Rect padding) {
         padding.set(mPadding);
@@ -142,8 +156,11 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
         invalidateSelf();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    /**
+     * {@inheritDoc}
+     */
     @Override
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void getOutline(@NonNull Outline outline) {
         outline.setRect(hasRipple() ? mActivatedRect : mDefaultRect);
     }
@@ -167,10 +184,20 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
         }
     }
 
+    /**
+     * Get whether this drawable is in error state. The default is {@code false}.
+     *
+     * @return Whether this drawable is in error state.
+     */
     public boolean hasError() {
         return mError;
     }
 
+    /**
+     * Set whether this drawable is in error state. The default is {@code false}.
+     *
+     * @param error Whether this drawable should be in error state.
+     */
     public void setError(boolean error) {
         if (mError != error) {
             mError = error;

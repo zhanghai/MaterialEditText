@@ -11,7 +11,13 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+/**
+ * A {@code TextInputLayout} that automatically calls
+ * {@link MaterialEditTextBackgroundDrawable#setError(boolean)} in {@link #setError(CharSequence)}
+ * if its {@link EditText} is an instance of {@link MaterialEditTextBackgroundDrawable}.
+ */
 public class MaterialTextInputLayout extends TextInputLayout {
 
     private MaterialEditTextBackgroundDrawable mEditTextBackground;

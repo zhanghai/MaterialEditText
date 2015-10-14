@@ -19,9 +19,12 @@ import me.zhanghai.android.materialedittext.internal.FloatProperty;
 import me.zhanghai.android.materialedittext.internal.MathUtils;
 
 /**
+ * A linear ripple implemented according to the framework implementation of
+ * {@code RippleForeground}.
+ *
  * @see <a href="https://github.com/android/platform_frameworks_base/blob/f872ee0057ed247aa93589347f1b53afc99517f8/graphics/java/android/graphics/drawable/RippleForeground.java">RippleForeground@f872ee</a>
  */
-public class LinearRipple {
+class LinearRipple {
 
     private static final float WAVE_TOUCH_DOWN_ACCELERATION_DP = 1024;
     private static final float WAVE_TOUCH_UP_ACCELERATION_DP = 3400;
