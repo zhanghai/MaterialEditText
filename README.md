@@ -1,6 +1,6 @@
 # MaterialProgressBar
 
-Material Design `EditText` with a delightful linear ripple in the background.
+Material Design `EditText` with a delightful linear ripple in background.
 
 ## Preview
 
