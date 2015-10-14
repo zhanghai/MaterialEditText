@@ -47,7 +47,7 @@ For example:
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </me.zhanghai.android.materialedittext.MaterialTextInputLayout>
-```xml
+```
 
 ## ProGuard
 
