@@ -11,9 +11,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-
-import me.zhanghai.android.materialedittext.internal.ViewCompat;
 
 public class MaterialTextInputLayout extends TextInputLayout {
 
@@ -39,9 +36,6 @@ public class MaterialTextInputLayout extends TextInputLayout {
             // Just throw a ClassCastException if the background of MaterialEditText is not the one
             // automatically set.
             mEditTextBackground = (MaterialEditTextBackgroundDrawable) child.getBackground();
-        } else if (child instanceof EditText) {
-            mEditTextBackground = new MaterialEditTextBackgroundDrawable(getContext());
-            ViewCompat.setBackground(child, mEditTextBackground);
         }
     }
 
