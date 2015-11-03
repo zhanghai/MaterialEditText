@@ -32,10 +32,10 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
     private static final int INTRINSIC_HEIGHT_DP = 24;
 
     private static final int INTRINSIC_PADDING_HORIZONTAL = 4;
-    private static final int INTRINSIC_PADDING_TOP = 4;
-    private static final int INTRINSIC_PADDING_BOTTOM = 13;
+    private static final int INTRINSIC_PADDING_TOP = 10;
+    private static final int INTRINSIC_PADDING_BOTTOM = 11;
 
-    private static final int DRAWING_RECT_TOP_FROM_BOTTOM_DP = 6;
+    private static final int DRAWING_RECT_TOP_FROM_BOTTOM_DP = 9;
     private static final int DEFAULT_HEIGHT_DP = 1;
     private static final int ACTIVATED_HEIGHT_DP = 2;
 
