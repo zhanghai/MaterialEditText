@@ -77,6 +77,8 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
     private LinearRipple[] mExitingRipples = new LinearRipple[MAX_RIPPLES];
     private int mExitingRippleCount;
 
+    private DummyConstantState mConstantState;
+
     public MaterialEditTextBackgroundDrawable(Context context) {
         super(context);
 
@@ -99,6 +101,8 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
         mColorHint = ThemeUtils.getColorFromAttrRes(android.R.attr.textColorHint, context);
         mColorHintAlpha = (float) Color.alpha(mColorHint) / 0xFF;
         mDisabledAlpha = ThemeUtils.getFloatFromAttrRes(android.R.attr.disabledAlpha, context);
+
+        mConstantState = new DummyConstantState();
     }
 
     /**
@@ -505,6 +509,30 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
             if (mEnteringRipple != null) {
                 mEnteringRipple.draw(canvas, paint);
             }
+        }
+    }
+
+    // Workaround TextInputLayout's workaround which calls bg.getConstantState().newDrawable()
+    // without checking for null.
+    // We are never inflated from XML so the protocol of ConstantState does not apply to us. In
+    // order to make TextInputLayout happy, we return ourselves from
+    // DummyConstantState.newDrawable().
+
+    @Override
+    public ConstantState getConstantState() {
+        return mConstantState;
+    }
+
+    private class DummyConstantState extends ConstantState {
+
+        @Override
+        public int getChangingConfigurations() {
+            return 0;
+        }
+
+        @Override
+        public Drawable newDrawable() {
+            return MaterialEditTextBackgroundDrawable.this;
         }
     }
 }
