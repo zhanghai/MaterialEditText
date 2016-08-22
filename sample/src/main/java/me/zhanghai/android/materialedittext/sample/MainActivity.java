@@ -6,23 +6,23 @@
 package me.zhanghai.android.materialedittext.sample;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.error_native_edit)
+    @BindView(R.id.error_native_edit)
     EditText mErrorNativeEdit;
-    @Bind(R.id.error_material_edit)
+    @BindView(R.id.error_material_edit)
     EditText mErrorMaterialEdit;
-    @Bind(R.id.error_edit_layout)
+    @BindView(R.id.error_edit_layout)
     TextInputLayout mErrorEditLayout;
 
     @Override
