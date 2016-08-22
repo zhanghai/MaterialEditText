@@ -9,7 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v7.widget.AppCompatEditText;
+import android.support.design.widget.TextInputEditText;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
@@ -20,7 +20,7 @@ import me.zhanghai.android.materialedittext.internal.ViewCompat;
  * {@link MaterialEditTextBackgroundDrawable} and calls {@link Drawable#setHotspot} for it on
  * platforms prior to {@link Build.VERSION_CODES#LOLLIPOP}.
  */
-public class MaterialEditText extends AppCompatEditText {
+public class MaterialEditText extends TextInputEditText {
 
     private MaterialEditTextBackgroundDrawable mBackground;
 
