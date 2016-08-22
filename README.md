@@ -16,7 +16,7 @@ Sample screenshot:
 
 ![Screenshot](screenshot/screenshot.png)
 
-[Sample APK](//github.com/DreaminginCodeZH/MaterialEditText/releases/download/v1.0.2/sample-release.apk)
+[Sample APK](//github.com/DreaminginCodeZH/MaterialEditText/releases/download/v1.0.3/sample-release.apk)
 
 ## Design
 
@@ -31,7 +31,7 @@ The `InputTextLayout` from Design Support Library can automatically set the red 
 Gradle:
 
 ```gradle
-compile 'me.zhanghai.android.materialedittext:library:1.0.2'
+compile 'me.zhanghai.android.materialedittext:library:1.0.3'
 ```
 
 ## Usage
