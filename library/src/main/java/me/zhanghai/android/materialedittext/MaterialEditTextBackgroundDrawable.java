@@ -371,7 +371,16 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
 
     private LinearRipple createRipple() {
 
-        if (mFillingRippleCount + mExitingRippleCount >= MAX_RIPPLES) {
+        int rippleCount = 0;
+        if (mEnteringRipple != null) {
+            ++rippleCount;
+        }
+        rippleCount += mFillingRippleCount;
+        if (mFilledRipple != null) {
+            ++rippleCount;
+        }
+        rippleCount += mExitingRippleCount;
+        if (rippleCount >= MAX_RIPPLES) {
             Log.w(TAG, "Too many ripples alive, skipping ripple creation");
             return null;
         }
@@ -387,12 +396,6 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
     }
 
     private void createAndEnterRipple() {
-
-        // DEBUG: Remove this.
-        if (mEnteringRipple != null) {
-            throw new IllegalStateException("createAndEnterRipple() when mEnteringRipple is not null");
-        }
-
         mEnteringRipple = createRipple();
         if (mEnteringRipple != null) {
             mEnteringRipple.enter();
@@ -417,7 +420,9 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
 
     private void createFillingRipple() {
         LinearRipple ripple = createRipple();
-        fillRipple(ripple);
+        if (ripple != null) {
+            fillRipple(ripple);
+        }
     }
 
     /**
