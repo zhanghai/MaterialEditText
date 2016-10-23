@@ -18,8 +18,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.error_native_edit)
-    EditText mErrorNativeEdit;
+    @BindView(R.id.error_framework_edit)
+    EditText mErrorFrameworkEdit;
     @BindView(R.id.error_material_edit)
     EditText mErrorMaterialEdit;
     @BindView(R.id.error_edit_layout)
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
 
-        mErrorNativeEdit.setError("An error occurred");
+        mErrorFrameworkEdit.setError("An error occurred");
         mErrorMaterialEdit.setError("An error occurred");
         mErrorEditLayout.setError("An error occurred");
     }
