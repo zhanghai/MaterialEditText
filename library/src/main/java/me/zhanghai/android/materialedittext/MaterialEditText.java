@@ -16,7 +16,7 @@ import android.view.MotionEvent;
 import me.zhanghai.android.materialedittext.internal.ViewCompat;
 
 /**
- * An {@code AppCompatEditText} that automatically sets its background to
+ * A {@code TextInputEditText} that automatically sets its background to
  * {@link MaterialEditTextBackgroundDrawable} and calls {@link Drawable#setHotspot} for it on
  * platforms prior to {@link Build.VERSION_CODES#LOLLIPOP}.
  */
