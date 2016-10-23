@@ -5,6 +5,7 @@
 
 package me.zhanghai.android.materialedittext;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -80,6 +81,7 @@ public class MaterialEditTextBackgroundDrawable extends BasePaintDrawable {
     private LinearRipple[] mExitingRipples = new LinearRipple[MAX_RIPPLES];
     private int mExitingRippleCount;
 
+    @SuppressLint("NewApi")
     public MaterialEditTextBackgroundDrawable(Context context) {
 
         int colorControlActivated = ThemeUtils.getColorFromAttrRes(R.attr.colorControlActivated,
