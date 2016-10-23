@@ -7,6 +7,7 @@ package me.zhanghai.android.materialedittext;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -24,7 +25,7 @@ import me.zhanghai.android.materialedittext.internal.ThemeUtils;
 /**
  * A Material Design background {@link Drawable} for {@link EditText}.
  */
-public class MaterialEditTextBackgroundDrawable extends DrawableBase {
+public class MaterialEditTextBackgroundDrawable extends BasePaintDrawable {
 
     private static final String TAG = MaterialEditTextBackgroundDrawable.class.getName();
 
@@ -51,9 +52,11 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
     private final int mDefaultHeight;
     private final int mActivatedHeight;
 
-    private final int mColorHint;
-    private final float mColorHintAlpha;
+    private final ColorStateList mHintColorList;
     private final float mDisabledAlpha;
+
+    private int mHintColor;
+    private float mHintColorAlpha;
 
     private float mDensity;
 
@@ -77,10 +80,13 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
     private LinearRipple[] mExitingRipples = new LinearRipple[MAX_RIPPLES];
     private int mExitingRippleCount;
 
-    private DummyConstantState mConstantState;
-
     public MaterialEditTextBackgroundDrawable(Context context) {
-        super(context);
+
+        int colorControlActivated = ThemeUtils.getColorFromAttrRes(R.attr.colorControlActivated,
+                context);
+        // setTint() has been overridden for compatibility; DrawableCompat won't work because
+        // wrapped Drawable won't be Animatable.
+        setTint(colorControlActivated);
 
         Resources resources = context.getResources();
         mDensity = resources.getDisplayMetrics().density;
@@ -98,11 +104,10 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
         mDefaultHeight = (int) (DEFAULT_HEIGHT_DP * mDensity + 0.5f);
         mActivatedHeight = (int) (ACTIVATED_HEIGHT_DP * mDensity + 0.5f);
 
-        mColorHint = ThemeUtils.getColorFromAttrRes(android.R.attr.textColorHint, context);
-        mColorHintAlpha = (float) Color.alpha(mColorHint) / 0xFF;
+        mHintColorList = ThemeUtils.getColorStateListFromAttrRes(android.R.attr.textColorHint,
+                context);
+        updateHintColor();
         mDisabledAlpha = ThemeUtils.getFloatFromAttrRes(android.R.attr.disabledAlpha, context);
-
-        mConstantState = new DummyConstantState();
     }
 
     /**
@@ -223,6 +228,8 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
     @Override
     protected boolean onStateChange(int[] stateSet) {
 
+        updateHintColor();
+
         mEnabled = false;
         mPressed = false;
         mFocused = false;
@@ -244,6 +251,11 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
 
         // Be safe.
         return true;
+    }
+
+    private void updateHintColor() {
+        mHintColor = mHintColorList.getColorForState(getState(), Color.TRANSPARENT);
+        mHintColorAlpha = (float) Color.alpha(mHintColor) / 0xFF;
     }
 
     private void onStateChanged() {
@@ -472,7 +484,7 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
     }
 
     @Override
-    protected void onDraw(Canvas canvas, Paint paint) {
+    protected void onDraw(Canvas canvas, int width, int height, Paint paint) {
         drawDefault(canvas);
         drawRipples(canvas, paint);
     }
@@ -482,9 +494,9 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
         if (mDefaultPaint == null) {
             mDefaultPaint = new Paint();
             mDefaultPaint.setAntiAlias(true);
-            mDefaultPaint.setColor(mColorHint);
+            mDefaultPaint.setColor(mHintColor);
         }
-        int alpha = (int) ((mEnabled ? 1 : mDisabledAlpha) * mColorHintAlpha * mAlpha + 0.5f);
+        int alpha = (int) ((mEnabled ? 1 : mDisabledAlpha) * mHintColorAlpha * mAlpha + 0.5f);
         mDefaultPaint.setAlpha(alpha);
 
         canvas.drawRect(mDefaultRect, mDefaultPaint);
@@ -514,30 +526,6 @@ public class MaterialEditTextBackgroundDrawable extends DrawableBase {
             if (mEnteringRipple != null) {
                 mEnteringRipple.draw(canvas, paint);
             }
-        }
-    }
-
-    // Workaround TextInputLayout's workaround which calls bg.getConstantState().newDrawable()
-    // without checking for null.
-    // We are never inflated from XML so the protocol of ConstantState does not apply to us. In
-    // order to make TextInputLayout happy, we return ourselves from
-    // DummyConstantState.newDrawable().
-
-    @Override
-    public ConstantState getConstantState() {
-        return mConstantState;
-    }
-
-    private class DummyConstantState extends ConstantState {
-
-        @Override
-        public int getChangingConfigurations() {
-            return 0;
-        }
-
-        @Override
-        public Drawable newDrawable() {
-            return MaterialEditTextBackgroundDrawable.this;
         }
     }
 }

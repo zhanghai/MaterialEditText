@@ -6,6 +6,7 @@
 package me.zhanghai.android.materialedittext.internal;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 
 public class ThemeUtils {
@@ -16,6 +17,15 @@ public class ThemeUtils {
         TypedArray a = context.obtainStyledAttributes(new int[] {attr});
         try {
             return a.getColor(0, 0);
+        } finally {
+            a.recycle();
+        }
+    }
+
+    public static ColorStateList getColorStateListFromAttrRes(int attr, Context context) {
+        TypedArray a = context.obtainStyledAttributes(new int[] {attr});
+        try {
+            return a.getColorStateList(0);
         } finally {
             a.recycle();
         }
