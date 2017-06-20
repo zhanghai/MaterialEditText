@@ -53,7 +53,7 @@ For example:
 
 ## ProGuard
 
-The AAR of this library has already included a Proguard configuration file to make `ObjectAnimator` work properly.
+The AAR of this library has already included a ProGuard configuration file to make `ObjectAnimator` work properly.
 
 ## Older versions
 
