@@ -16,7 +16,7 @@ Sample screenshot:
 
 ![Screenshot](screenshot/screenshot.png)
 
-[Sample APK](//github.com/DreaminginCodeZH/MaterialEditText/releases/download/v1.0.5/sample-release.apk)
+[Sample APK](//github.com/zhanghai/MaterialEditText/releases/download/v1.0.5/sample-release.apk)
 
 ## Design
 
